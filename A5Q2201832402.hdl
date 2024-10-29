@@ -1,0 +1,14 @@
+CHIP A5Q2201832402 {
+
+    IN U, P, F;
+    OUT N;
+
+    PARTS:
+    Not (in=U, out=notU);
+    And (a=P, b=notU, out=x);
+    Or (a=P, b=notU, out=y);
+    Or (a=y, b=x, out=z);
+    And (a=F, b=z, out=N);
+
+
+}

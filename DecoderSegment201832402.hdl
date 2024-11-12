@@ -8,13 +8,29 @@ CHIP DecoderSegment201832402 {
     Not (in=C, out=notC);
     Not (in=D, out=notD);
 
-    And(a=notA, b=B, out=notAB);
-    And(a=B, b=C, out=BC);
-    And(a=A, b=notB, out=AnotB);
-    And(a=AnotB, b=notC, out=AnotBnotC );
+    And (a=C, b=notD, out=CnotD);
 
-    Or(a=notD, b=notAB, out=notDnotAB);
-    Or(a=BC, b=AnotBnotC, out=BCAnotBnotC);
-    Or(a=notDnotAB, b=BCAnotBnotC, out=e);
+    And (a=B, b=C, out=BC);
+
+    And (a=notA, b=C, out=notAC);
+
+    And (a=A, b=notD, out=AnotD);
+
+    And (a=A, b=notB, out=AnotB);
+    And (a=AnotB, b=notC, out=AnotBnotC);
+
+    And (a=notA, b=B, out=notAB);
+    And (a=notAB, b=D, out=notABD);
+
+    And (a=notA, b=notB, out=notAnotB);
+    And (a=notAnotB, b=notD, out=notAnotBnotD);
+
+    Or (a=CnotD, b=BC, out=q1);
+    Or (a=notAC, b=AnotD, out=q2);
+    Or (a=AnotBnotC, b=notABD, out=q3);
+    Or (a=q3, b=notAnotBnotD, out=q4);
+    Or (a=q1, b=q2, out=q5);
+    Or (a=q4, b=q5, out=e);
+
    
 }

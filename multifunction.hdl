@@ -3,53 +3,17 @@ CHIP multifunction {
     OUT X,Y;
 
     PARTS:
-    /* X */
-    Not(in=CON[0], out=con0);
-    Not(in=CON[1], out=con1);
-
-    And (a=x1, b=con0, out=q0);
-    And (a=q0, b=con1, out=p0);
-
-    And (a=x2, b=CON[0], out=q1);
-    And (a=q1, b=con1, out=p1);
-
-    And (a=x3, b=con0, out=q2);
-    And (a=q2, b=CON[1], out=p2);
-
-    And (a=x4, b=CON[0], out=q3);
-    And (a=q3, b=CON[1], out=p3);
-
-
-    Or (a=p0, b=p1, out=p4);
-    Or (a=p2, b=p3, out=p5);
-    Or (a=p4, b=p5, out=X);
-
-    /* Y */
-    And (a=y1, b=con0, out=m0);
-    And (a=m0, b=con1, out=n0);
-
-    And (a=y2, b=CON[0], out=m1);
-    And (a=m1, b=con1, out=n1);
-
-    And (a=y3, b=con0, out=m2);
-    And (a=m2, b=CON[1], out=n2);
-
-    And (a=y4, b=CON[0], out=m3);
-    And (a=m3, b=CON[1], out=n3);
-
-
-    Or (a=n0, b=n1, out=n4);
-    Or (a=n2, b=n3, out=n5);
-    Or (a=n4, b=n5, out=Y);
-
-
-
-    /* chips */
     chip1 (A=A,B=B, C=C, D=D, X=x1, Y=y1);
     chip2 (A=A,B=B, C=C, D=D, X=x2, Y=y2);
     chip3 (A=A,B=B, C=C, D=D, X=x3, Y=y3);
     chip4 (A=A,B=B, C=C, D=D, X=x4, Y=y4);
-   
 
+    Mux (a=x1, b=x2, sel=CON[0], out=x1x2);
+    Mux (a=x3, b=x4, sel=CON[0], out=x3x4);
+    Mux (a=x1x2, b=x3x4, sel=CON[1], out=X);
 
+    Mux (a=y1, b=y2, sel=CON[0], out=y1y2);
+    Mux (a=y3, b=y4, sel=CON[0], out=y3y4);
+    Mux (a=y1y2, b=y3y4, sel=CON[1], out=Y);
+ 
 }

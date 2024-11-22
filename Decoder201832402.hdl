@@ -1,0 +1,192 @@
+CHIP Decoder201832402 {
+    IN A,B,C,D;
+    OUT a,b,c,d,e,f,g;
+
+    PARTS:
+
+    // segment a
+    //Not(in = A, out = notA);
+    //Not(in = B, out = notB);
+    //Not(in = C, out = notC);
+    //Not(in = D, out = notD);
+
+    And(a = C, b = notD, out = CnotD);
+    
+    And(a = A, b = D, out = AD);
+
+    Or(a = CnotD, b = AD, out = CnotDAD);
+
+    And(a = notB, b = C, out = notBC);
+
+    Or(a = CnotDAD, b = notBC, out = CnotDADnotBC);
+
+    And(a = notA, b = B, out = notAB);
+    And(a = notAB, b = notC, out = notABnotC);
+
+    And(a = A, b = notB, out = AnotB);
+
+    Or(a = AnotB, b = notABnotC, out = AnotBnotABnotC);
+
+    Or(a = AnotBnotABnotC, b = CnotDADnotBC, out = a);
+
+    // segment b
+
+    // Not(in = A, out = notA);
+    // Not(in = B, out = notB);
+    // Not(in = C, out = notC);
+    // Not(in = D, out = notD);
+
+    And(a = A, b = notC, out = AnotC);
+
+    //And(a = A, b = notB, out = AnotB);
+    And(a = AnotB, b = D, out = AnotBD);
+
+    Or(a = AnotC, b = AnotBD, out = AnotCorAnotBD );
+
+
+    And(a = B, b = notC, out = BnotC);
+    And(a = BnotC, b = D, out = BnotCD);
+
+    Or(a = AnotCorAnotBD, b = BnotCD, out = x);
+
+    And(a = notB, b = notC, out = notBnotC);
+    And(a = notBnotC, b = notD, out = notBnotCnotD);
+
+    And(a = notA, b = notB, out = notAnotB);
+    And(a = notAnotB, b = C, out = notAnotBC);
+
+    And(a = B, b = C, out = BC);
+    And(a = BC, b = notD, out = BCnotD);
+
+    Or(a = BCnotD, b = notAnotBC, out = BCnotDornotAnotBC);
+
+    Or(a = BCnotDornotAnotBC, b = notBnotCnotD, out = y);
+
+    Or(a = x, b = y, out = b);
+
+    // segment C
+
+    // Not(in = A, out = notA);
+    // Not(in = B, out = notB);
+    // Not(in = C, out = notC);
+    // Not(in = D, out = notD);
+
+    And(a = notD, b = notB, out = notDnotB);
+
+    And(a = notC, b = notB, out = notCnotB);
+
+    And(a = C, b = D, out = CD);
+    And(a = CD, b = notA, out = CDnotA);
+
+    Or(a = notCnotB, b = CDnotA, out = notCnotBCDnotA);
+    //Or(a = notCnotBCDnotA, b = notDnotB, out = x);
+
+    And(a = notC, b = notD, out = notCnotD);
+    And(a = notCnotD, b = notA, out = notCnotDnotA);
+
+    And(a = notC, b = D, out = notCD);
+    And(a = notCD, b = A, out = notCDA);
+
+    //Or(a = notCnotDnotA, b = notCDA, out = y);
+    
+    Or(a = x, b = y, out = c);
+
+    // segment d
+
+    // Not(in=A, out=notA);
+
+    // Not(in=B, out=notB);
+
+    // Not(in=C, out=notC);
+
+    // Not(in=D, out=notD);
+
+
+
+    Or(a = BandnotD , b =notCandnotD , out = Out1 );
+
+    Or(a = AandnotB , b = Out3 , out = Out2 );
+
+    Or(a = notAandBandnotC , b = AandC , out = Out3 );
+
+    Or(a = Out2, b= Out1, out = d);
+
+
+
+    And(a=B,b=notD,out=BandnotD);
+
+
+
+    And(a=notC,b=notD,out=notCandnotD);
+
+
+
+    And(a=A,b=notB,out=AandnotB);
+
+    And(a=notA,b=B,out=notAandB);
+    And(a=notAandB, b=notC, out= notAandBandnotC);
+    And(a=A,b=C,out=AandC);
+
+    // segment e
+
+    Not (in=A, out=notA);
+    Not (in=B, out=notB);
+    Not (in=C, out=notC);
+    Not (in=D, out=notD);
+
+    //And (a=C, b=notD, out=CnotD);
+    //And (a=B, b=C, out=BC);
+    And (a=notA, b=C, out=notAC);
+    And (a=A, b=notD, out=AnotD);
+    //And (a=A, b=notB, out=AnotB);
+    And (a=AnotB, b=notC, out=AnotBnotC);
+    //And (a=notA, b=B, out=notAB);
+    And (a=notAB, b=D, out=notABD);
+    //And (a=notA, b=notB, out=notAnotB);
+    And (a=notAnotB, b=notD, out=notAnotBnotD);
+
+    Or (a=CnotD, b=BC, out=q1);
+    Or (a=notAC, b=AnotD, out=q2);
+    Or (a=AnotBnotC, b=notABD, out=q3);
+    Or (a=q3, b=notAnotBnotD, out=q4);
+    Or (a=q1, b=q2, out=q5);
+    Or (a=q4, b=q5, out=e);
+
+    // segment f
+
+    // Not(in=A,out=notA);
+    // Not(in=B,out=notB);
+    // Not(in=C,out=notC);
+    // Not(in=D,out=notD);
+
+    And(a=A,b=notB,out=andAnB);
+    And(a=B,b=notA,out=andBnA);
+    And(a=D,b=notA,out=andDnA);
+    And(a=D,b=notC,out=andDnC);
+    And(a=notA,b=notC,out=andnAnC);
+
+    Or(a=andAnB,b=andBnA,out=or1);
+    Or(a=andDnA,b=andDnC,out=or2);
+    Or(a=or1,b=or2,out=or3);
+    Or(a=or3,b=andnAnC,out=f);
+
+    // segment g
+
+    And(a=A, b=B, out=AB);
+    // Not(in=D, out=notD);
+    //And(a=C, b=notD, out=CnotD);
+    Or(a=AB,b=CnotD, out=temp1);
+    // Not(in=B, out=notB);
+    // Not(in=C, out=notC);
+    //And(a=A, b=notB, out=AnotB);
+    And(a=AnotB, b=C, out=AnotBC);
+    //And(a=notB, b=notC, out=notBnotC);
+    //And(a=notBnotC, b=notD, out=notBnotCnotD);
+    Or(a=AnotBC,
+    b=notBnotCnotD,
+    out=temp2);
+    Or(a=temp1, b=temp2, out=g);
+
+
+
+}

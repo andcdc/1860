@@ -1,0 +1,24 @@
+CHIP Shift4bit {
+    IN x;
+    OUT out[4];
+
+    PARTS:
+    Bit (in=new, load=true, out=out[0], out=old);
+    Mux (a=x, b=x, sel=x, out=new);
+
+    Bit (in=new2, load=true, out=delay1);
+    Bit (in=delay1, load=true, out=out[1]);
+    Mux (a=x, b=x, sel=x, out=new2);
+
+    Bit (in=new3, load=true, out=delay2);
+    Bit (in=delay2, load=true, out=i0);
+    Bit (in=i0, load=true, out=out[2]);
+    Mux (a=x,b=x,sel=x, out=new3);
+
+    Bit (in=new4, load=true, out=delay3);
+    Bit (in=delay3, load=true, out=i1);
+    Bit (in=i1, load=true, out=i2);
+    Bit (in=i2, load=true, out=out[3]);
+    Mux (a=x,b=x,sel=x, out=new4);
+
+}

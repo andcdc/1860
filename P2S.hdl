@@ -1,0 +1,30 @@
+CHIP P2S {
+    IN indata[4], load, enable;
+    OUT sout, complete;
+
+    PARTS:
+
+    Bit (in=indata[0], load=load, out=in0);
+    Bit (in=indata[1], load=load, out=in1);
+    Bit (in=indata[2], load=load, out=in2);
+    Bit (in=indata[3], load=load, out=in3);
+
+
+    Mux (a=false, b=in3, sel=enable, out=din);
+    DFF (in=din, out=dout3);
+    Mux (a=dout3, b=in2, sel=enable, out=muxin2);
+    DFF (in=muxin2, out=dout2);
+    Mux (a=dout2, b=in1, sel=enable, out=muxin1);
+    DFF (in=muxin1, out=dout1);
+    Mux (a=dout1, b=in0, sel=enable, out=muxin0);
+    DFF (in=muxin0, out=sout);
+
+
+    DFF (in=enable, out=delay1);
+    DFF (in=delay1, out=delay2);
+    DFF (in=delay2, out=delay3);
+    DFF (in=delay3, out=complete);
+
+
+    
+}

@@ -9,22 +9,23 @@ CHIP P2S {
     Bit (in=indata[2], load=load, out=in2);
     Bit (in=indata[3], load=load, out=in3);
 
+    And (a=in0, b=out0, out=ob);
+    And (a=in1, b=out1, out=ob1);
+    And (a=in2, b=out2, out=ob2);
+    And (a=in3, b=out3, out=ob3);
 
-    Mux (a=false, b=in3, sel=enable, out=din);
-    DFF (in=din, out=dout3);
-    Mux (a=dout3, b=in2, sel=enable, out=muxin2);
-    DFF (in=muxin2, out=dout2);
-    Mux (a=dout2, b=in1, sel=enable, out=muxin1);
-    DFF (in=muxin1, out=dout1);
-    Mux (a=dout1, b=in0, sel=enable, out=muxin0);
-    DFF (in=muxin0, out=sout);
+    And (a=ob3, b=true, out=complete);
+    Or8Way (in[0]=out0, in[1]=out1, in[2]=out2, in[3]=out3, in[4]=false, in[5]=false, in[6]=false, in[7]=false, out=comp);
+    Mux (a=enable, b=false, sel=comp, out=sel);
 
+    Or (a=ob, b=ob1, out=z0);
+    Or (a=ob2, b=ob3, out=z1);
+    Or (a=z0, b=z1, out=sout);
 
-    DFF (in=enable, out=delay1);
-    DFF (in=delay1, out=delay2);
-    DFF (in=delay2, out=delay3);
-    DFF (in=delay3, out=complete);
-
+    DFF (in=sel, out=out0);
+    DFF (in=out0, out=out1);
+    DFF (in=out1, out=out2);
+    DFF (in=out2, out=out3);
 
     
 }
